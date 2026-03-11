@@ -1,0 +1,15 @@
+services:
+  db:
+    build: ./database
+    container_name: database_m_and_a
+    ports:
+      - "3306:3306"
+    restart: always
+
+  api:
+    build: ./api
+    container_name: project_fusion_api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db

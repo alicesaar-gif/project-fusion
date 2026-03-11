@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Fusion Analytics | M&A Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background: #f4f7f6; color: #333; }
+        .header { border-bottom: 2px solid #004a80; padding-bottom: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #004a80; color: white; text-transform: uppercase; font-size: 12px; }
+        tr:hover { background-color: #f1f1f1; }
+        .btn { padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PROJECT FUSION | <small>Market Intelligence</small></h1>
+        <a href="/fusion/report" class="btn">⬇ BAIXAR RELATÓRIO PDF</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Empresa Target</th>
+                <th>Setor Estratégico</th>
+                <th>Valuation (US$ Millions)</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            </tbody>
+    </table>
+
+    <script>
+        fetch('/fusion/targets')
+            .then(response => response.json())
+            .then(data => {
+                const body = document.getElementById('table-body');
+                data.forEach(target => {
+                    body.innerHTML += `<tr>
+                        <td><strong>${target.name}</strong></td>
+                        <td>${target.sector}</td>
+                        <td>$ ${target.valuation.toLocaleString()} M</td>
+                    </tr>`;
+                });
+            });
+    </script>
+</body>
+</html>
