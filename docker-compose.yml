@@ -4,6 +4,8 @@ services:
   db:
     image: fusion_db:latest
     build: ./database
+    networks:
+      - fusion_network
     ports:
       - "3306:3306"
     volumes:
@@ -18,15 +20,19 @@ services:
   api:
     image: fusion_api:latest
     build: ./api
+    networks:
+      - fusion_network
     deploy:
       mode: replicated
-      replicas: 3 # Aqui estamos a criar 3 réplicas da sua API!
+      replicas: 3
       restart_policy:
         condition: on-failure
 
   nginx:
     image: fusion_nginx:latest
     build: ./nginx
+    networks:
+      - fusion_network
     ports:
       - "80:80"
     depends_on:
@@ -35,6 +41,10 @@ services:
       mode: replicated
       replicas: 1
 
-# Criando um volume persistente e replicável para o banco de dados
+networks:
+  fusion_network:
+    driver: overlay
+    attachable: true
+
 volumes:
   db_data:
