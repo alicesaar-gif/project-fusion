@@ -5,7 +5,6 @@ Este documento descreve a estratégia de migração do **Project Fusion** do amb
 ## 🏗️ Arquitetura de Nuvem Proposta
 
 
-
 ### 1. Build & Artifacts (CI/CD)
 - **Containerização:** Utilização do Dockerfile existente para gerar a imagem imutável da API.
 - **Registry:** Publicação da imagem no **Amazon ECR (Elastic Container Registry)** para controle de versionamento e segurança.

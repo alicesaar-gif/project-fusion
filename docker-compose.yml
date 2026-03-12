@@ -1,15 +1,40 @@
+version: '3.8'
+
 services:
   db:
+    image: fusion_db:latest
     build: ./database
-    container_name: database_m_and_a
     ports:
       - "3306:3306"
-    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
 
   api:
+    image: fusion_api:latest
     build: ./api
-    container_name: project_fusion_api
+    deploy:
+      mode: replicated
+      replicas: 3 # Aqui estamos a criar 3 réplicas da sua API!
+      restart_policy:
+        condition: on-failure
+
+  nginx:
+    image: fusion_nginx:latest
+    build: ./nginx
     ports:
-      - "8080:8080"
+      - "80:80"
     depends_on:
-      - db
+      - api
+    deploy:
+      mode: replicated
+      replicas: 1
+
+# Criando um volume persistente e replicável para o banco de dados
+volumes:
+  db_data:

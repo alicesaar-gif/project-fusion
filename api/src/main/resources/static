@@ -2,48 +2,26 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Fusion Analytics | M&A Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Fusion | M&A Analytics</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background: #f4f7f6; color: #333; }
-        .header { border-bottom: 2px solid #004a80; padding-bottom: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; }
-        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #004a80; color: white; text-transform: uppercase; font-size: 12px; }
-        tr:hover { background-color: #f1f1f1; }
-        .btn { padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; display: flex; justify-content: center; align-items: center; height: 100-vh; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; max-width: 500px; }
+        h1 { color: #2c3e50; margin-bottom: 0.5rem; }
+        p { color: #7f8c8d; line-height: 1.6; }
+        .badge { background: #3498db; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; }
+        .btn { display: inline-block; margin-top: 1.5rem; padding: 10px 20px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; transition: 0.3s; }
+        .btn:hover { background: #219150; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>PROJECT FUSION | <small>Market Intelligence</small></h1>
-        <a href="/fusion/report" class="btn">⬇ BAIXAR RELATÓRIO PDF</a>
+    <div class="container">
+        <span class="badge">Inovação & M&A</span>
+        <h1>Project Fusion</h1>
+        <p>Middleware inteligente para integração de dados em cenários de Fusões e Aquisições.</p>
+        <hr>
+        <p><small>Status do Sistema: <strong>Operacional via Docker</strong></small></p>
+        <a href="/api/targets" class="btn">Visualizar Alvos Estratégicos</a>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Empresa Target</th>
-                <th>Setor Estratégico</th>
-                <th>Valuation (US$ Millions)</th>
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            </tbody>
-    </table>
-
-    <script>
-        fetch('/fusion/targets')
-            .then(response => response.json())
-            .then(data => {
-                const body = document.getElementById('table-body');
-                data.forEach(target => {
-                    body.innerHTML += `<tr>
-                        <td><strong>${target.name}</strong></td>
-                        <td>${target.sector}</td>
-                        <td>$ ${target.valuation.toLocaleString()} M</td>
-                    </tr>`;
-                });
-            });
-    </script>
 </body>
 </html>

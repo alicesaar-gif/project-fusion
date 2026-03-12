@@ -2,9 +2,9 @@ package com.fusion.controller;
 
 import com.fusion.model.TargetCompany;
 import com.fusion.repository.TargetRepository;
-import com.fusion.service.ReportService; // Importando o serviço de PDF
-import org.springframework.beans.factory.annotation.Autowired; // Importando o Autowired
-import org.springframework.http.ResponseEntity; // Importando o ResponseEntity
+import com.fusion.service.ReportService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -33,7 +33,8 @@ public class TargetController {
 
         return ResponseEntity.ok()
                 .header("Content-Type", "application/pdf")
-                .header("Content-Disposition", "attachment; filename=valuation_report.pdf")
+                // A alteração está na linha abaixo: usamos 'inline' em vez de 'attachment'
+                .header("Content-Disposition", "inline; filename=valuation_report.pdf")
                 .body(pdf);
     }
 }

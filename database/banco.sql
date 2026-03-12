@@ -1,18 +1,14 @@
 CREATE DATABASE IF NOT EXISTS fusion_analytics;
 USE fusion_analytics;
 
--- Tabela principal com os dados das empresas que estão no pipeline de M&A
-CREATE TABLE target_companies (
+CREATE TABLE IF NOT EXISTS target_companies (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    company_name VARCHAR(100) NOT NULL,
-    industry_sector VARCHAR(50),
-    headquarters_location VARCHAR(50),
-    deal_status VARCHAR(50) DEFAULT 'Prospecting', -- Ex: Prospecting, Due Diligence, Closed
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    nome VARCHAR(100) NOT NULL,
+    setor VARCHAR(50),
+    valuation DECIMAL(10, 2)
 );
 
--- Tabela de métricas financeiras associada a cada empresa (Relação 1:N)
-CREATE TABLE financial_metrics (
+CREATE TABLE IF NOT EXISTS financial_metrics (
     id INT AUTO_INCREMENT PRIMARY KEY,
     company_id INT,
     fiscal_year INT,
@@ -22,7 +18,11 @@ CREATE TABLE financial_metrics (
     FOREIGN KEY (company_id) REFERENCES target_companies(id) ON DELETE CASCADE
 );
 
--TRUNCATE TABLE target_companies;
+-- Desativa a checagem de chave estrangeira temporariamente para permitir a limpeza
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE financial_metrics;
+TRUNCATE TABLE target_companies;
+SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO target_companies (nome, setor, valuation) VALUES 
 ('Solaris Energy', 'Energia Renovável', 1250.50),
